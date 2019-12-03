@@ -1,4 +1,5 @@
 #include <iostream>
+#include <fstream>
 #include "sudoku.hpp"
 
 const int SUDOKU_SIZE = 9;
@@ -12,7 +13,11 @@ void readSudoku(char sud[SUDOKU_SIZE][SUDOKU_SIZE], std::istream& in)
 int main()
 {
     Sudoku sud;
-    sud.read();
+    std::ifstream in("sudoku_samples/s02b.txt", std::ifstream::in);
+    sud.read(in);
+    in.close();
+
+    sud.solve();
     sud.print();
 
     return 0;
