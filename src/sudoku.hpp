@@ -18,13 +18,14 @@ public:
     // Reads the Sudoku using a stream
     void read(std::istream& = std::cin);
 
-    // Quadraticly checks if all boxes are set
+    // Checks if it's a solved Sudoku
     bool isSolved() const;
 
     // Solves the Sudoku
     void solve();
 
 private:
+    bool isSimpleSolved() const;
     void simpleSolve();
     void complexSolve();
     void removeGuesses();

@@ -38,6 +38,12 @@ void Sudoku::read(std::istream& in) {
 
 
 bool Sudoku::isSolved() const {
+    // TODO: Implement a sudoku solved state check
+    return false;
+}
+
+
+bool Sudoku::isSimpleSolved() const {
     for (int i = 0; i < SIZE; ++i)
         for (int j = 0; j < SIZE; ++j)
             if (matrix[i][j] == '0')
@@ -48,7 +54,7 @@ bool Sudoku::isSolved() const {
 
 void Sudoku::solve() {
     simpleSolve();
-    if (!isSolved())
+    if (!isSimpleSolved())
         complexSolve();
 }
 
