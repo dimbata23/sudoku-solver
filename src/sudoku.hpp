@@ -25,15 +25,12 @@ public:
     // Reads the Sudoku using a stream
     void read(std::istream& = std::cin);
 
-    // Checks if it's a solved Sudoku
-    bool isSolved() const;
-
     // Solves the Sudoku, returns wheter or not if it was possible to be solved
     bool solve();
 
 private:
-    bool isSimpleSolved() const;
-    void simpleSolve();
+    bool isFilled() const;
+    bool simpleSolve();
     bool complexSolve();
     bool btSolve();
     bool removeGuesses();

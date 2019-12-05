@@ -37,42 +37,7 @@ void Sudoku::read(std::istream& in) {
 }
 
 
-bool Sudoku::isSolved() const {
-    // TODO: Test wheter it works
-    for (int i = 0; i < SIZE; ++i) {
-        bool rowHasCurrNum = false;
-        bool colHasCurrNum = false;
-        for (int num = 1; num <= SIZE; ++num) {
-            for (int j = 0; j < SIZE; ++j) {
-                if (matrix[i][j] == num)
-                    rowHasCurrNum = true;
-                if (matrix[j][i] == num)
-                    colHasCurrNum = true;
-            }
-        }
-        if (!rowHasCurrNum || !colHasCurrNum)
-            return false;
-    }
-
-    for (int i = 0; i < SIZE; ++i) {
-        bool blockHasCurrNum = false;
-        for (int num = 1; num <= SIZE; ++num) {
-            for (int j = 0; j < SIZE; ++j) {
-                if (matrix[(i % SMALL_SIZE) * SMALL_SIZE + (j / SMALL_SIZE) * SMALL_SIZE][j % SMALL_SIZE + (i / SMALL_SIZE) * SMALL_SIZE] == num) {
-                    blockHasCurrNum = true;
-                    break;
-                }
-            }
-        }
-        if (!blockHasCurrNum)
-            return false;
-    }
-
-    return true;
-}
-
-
-bool Sudoku::isSimpleSolved() const {
+bool Sudoku::isFilled() const {
     for (int i = 0; i < SIZE; ++i)
         for (int j = 0; j < SIZE; ++j)
             if (matrix[i][j] == '0')
@@ -83,43 +48,45 @@ bool Sudoku::isSimpleSolved() const {
 
 bool Sudoku::solve() {
     simpleSolve();
-    if (!isSimpleSolved())
+    if (!isFilled())
         return complexSolve();
     return true;
 }
 
 
-void Sudoku::simpleSolve() {
-    removeGuesses();
+bool Sudoku::simpleSolve() {
+    return removeGuesses();
 }
 
 
 bool Sudoku::complexSolve() {
-    // TODO: Implement a simple backtracking algorithm.
-    // 1. Copy current sudoku
-    // 2. Solve the old sudoku with a set guess
-    // 3. If it has returned false -> old sudoku = the copy
     return btSolve();
 }
 
 
 bool Sudoku::btSolve() {
+    if (isFilled())
+        return true;
     Sudoku old(*this);
     for (int i = 0; i < SIZE; ++i) {
         for (int j = 0; j < SIZE; ++j) {
             if (matrix[i][j] == '0') {
                 for (auto guess : old.guesses[i][j]) {
                     matrix[i][j] = guess;
-                    if (removeGuesses() && btSolve()) {
+                    if (removeGuesses() && btSolve())
                         return true;
-                    } else {
+                    else
                         *this = old;
-                    }
                 }
+                if (matrix[i][j] == '0')
+                    return false;
             }
+
+            if (isFilled())
+                return true;
         }
     }
-    if (isSolved())
+    if (isFilled())
         return true;
     return false;
 }
@@ -131,15 +98,15 @@ bool Sudoku::removeGuesses() {
         for (int j = 0; j < SIZE; ++j) {
             if (matrix[i][j] != '0') {
                 guesses[i][j].clear();
-                int blockI = (i / SMALL_SIZE) * SMALL_SIZE;
-                int blockJ = (j / SMALL_SIZE) * SMALL_SIZE;
+                int blockI;
+                int blockJ;
                 for (int k = 0; k < SIZE; ++k) {
-                    blockI += k / SMALL_SIZE;
-                    blockJ += k % SMALL_SIZE;
+                    blockI = (i / SMALL_SIZE) * SMALL_SIZE + k / SMALL_SIZE;
+                    blockJ = (j / SMALL_SIZE) * SMALL_SIZE + k % SMALL_SIZE;
                     counter += guesses[k][j].erase(matrix[i][j]);
                     counter += guesses[i][k].erase(matrix[i][j]);
                     counter += guesses[blockI][blockJ].erase(matrix[i][j]);
-                    if (guesses[k][j].size() == 0 || guesses[i][k].size() == 0 || guesses[blockI][blockJ].size() == 0)
+                    if ((matrix[k][j] == '0' && guesses[k][j].size() == 0) || (matrix[i][k] == '0' && guesses[i][k].size() == 0) || (matrix[blockI][blockJ] == '0' && guesses[blockI][blockJ].size() == 0))
                         return false;
                 }
             }
@@ -174,11 +141,11 @@ bool Sudoku::setSingleGuesses() {
 
 bool Sudoku::canBePlacedAt(char guess, int i, int j) const {
     if (matrix[i][j] == '0') {
-        
+
         int blockI = (i / SMALL_SIZE) * SMALL_SIZE;
         int blockJ = (j / SMALL_SIZE) * SMALL_SIZE;
-        for (int k = 0; k < SIZE; ++i) {
-            if (matrix[i][j] == guess || matrix[j][i] == guess || matrix[blockI + k / SMALL_SIZE][blockJ + k % SMALL_SIZE] == guess)
+        for (int k = 0; k < SIZE; ++k) {
+            if (matrix[i][k] == guess || matrix[k][j] == guess || matrix[blockI + k / SMALL_SIZE][blockJ + k % SMALL_SIZE] == guess)
                 return false;
         }
         return true;

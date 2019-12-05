@@ -5,7 +5,7 @@
 int main()
 {
     Sudoku sud;
-    std::ifstream in("sudoku_samples/s09a.txt", std::ifstream::in);
+    std::ifstream in("sudoku_samples/s16.txt");
     sud.read(in);
     in.close();
 
