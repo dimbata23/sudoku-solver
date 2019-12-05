@@ -1,6 +1,7 @@
 #pragma once
 
 #include <iostream>
+#include <array>
 #include <unordered_set>
 
 const static int SIZE = 9;
