@@ -28,15 +28,17 @@ public:
     // Checks if it's a solved Sudoku
     bool isSolved() const;
 
-    // Solves the Sudoku
-    void solve();
+    // Solves the Sudoku, returns wheter or not if it was possible to be solved
+    bool solve();
 
 private:
     bool isSimpleSolved() const;
     void simpleSolve();
-    void complexSolve();
-    void removeGuesses();
-    void setSingleGuesses();
+    bool complexSolve();
+    bool btSolve();
+    bool removeGuesses();
+    bool setSingleGuesses();
+    bool canBePlacedAt(char guess, int i, int j) const;
 
 private:
     charMatrix matrix;
