@@ -3,6 +3,12 @@
 #include <iostream>
 #include <unordered_set>
 
+const static int SIZE = 9;
+const static int SMALL_SIZE = 3;
+
+using charMatrix = std::array<std::array<char, SIZE>, SIZE>;
+using guessesMatrix = std::array<std::array<std::unordered_set<char>, SIZE>, SIZE>;
+
 class Sudoku
 {
 
@@ -32,9 +38,7 @@ private:
     void setSingleGuesses();
 
 private:
-    const static int SIZE = 9;
-    const static int SMALL_SIZE = 3;
-    char matrix[SIZE][SIZE];
-    std::unordered_set<char> guesses[SIZE][SIZE];
+    charMatrix matrix;
+    guessesMatrix guesses;
 
 };

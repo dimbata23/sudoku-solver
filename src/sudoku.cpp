@@ -66,6 +66,9 @@ void Sudoku::simpleSolve() {
 
 void Sudoku::complexSolve() {
     // TODO: Implement a simple backtracking algorithm.
+    // 1. Copy current sudoku
+    // 2. Solve the copied sudoku with a set guess
+    // 3. If it has returned true -> copy new sudoku to the current
 }
 
 
