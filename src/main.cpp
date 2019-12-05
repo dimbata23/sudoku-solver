@@ -1,5 +1,6 @@
 #include <iostream>
 #include <fstream>
+#include <chrono>
 #include "sudoku.hpp"
 
 int main()
@@ -9,10 +10,15 @@ int main()
     sud.read(in);
     in.close();
 
-    if (sud.solve())
+    auto start = std::chrono::high_resolution_clock::now();
+    if (sud.solve()) {
+        auto end = std::chrono::high_resolution_clock::now();
+        auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count();
+        std::cout << "Solution found in " << duration << "ms." << std::endl;
         sud.print();
-    else
-        std::cout << "Couldn't solve the Sudoku!\n";
+    } else {
+        std::cout << "Couldn't solve the Sudoku!" << std::endl;;
+    }
 
     return 0;
 }
