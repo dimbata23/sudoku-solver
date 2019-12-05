@@ -81,9 +81,6 @@ bool Sudoku::btSolve() {
                 if (matrix[i][j] == '0')
                     return false;
             }
-
-            if (isFilled())
-                return true;
         }
     }
     if (isFilled())
