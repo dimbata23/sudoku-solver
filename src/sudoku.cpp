@@ -74,11 +74,11 @@ void Sudoku::complexSolve() {
 
 void Sudoku::removeGuesses() {
     int counter = 0;
-    for (int i = 0; i < SIZE; i++) {
-        for (int j = 0; j < SIZE; j++) {
+    for (int i = 0; i < SIZE; ++i) {
+        for (int j = 0; j < SIZE; ++j) {
             if (matrix[i][j] != '0') {
                 guesses[i][j].clear();
-                for (int k = 0; k < SIZE; k++) {
+                for (int k = 0; k < SIZE; ++k) {
                     counter += guesses[k][j].erase(matrix[i][j]);
                     counter += guesses[i][k].erase(matrix[i][j]);
                     counter += guesses[(i / SMALL_SIZE) * SMALL_SIZE + k / SMALL_SIZE][(j / SMALL_SIZE) * SMALL_SIZE + k % SMALL_SIZE].erase(matrix[i][j]);
@@ -93,8 +93,8 @@ void Sudoku::removeGuesses() {
 
 void Sudoku::setSingleGuesses() {
     int counter = 0;
-    for (int i = 0; i < SIZE; i++) {
-        for (int j = 0; j < SIZE; j++) {
+    for (int i = 0; i < SIZE; ++i) {
+        for (int j = 0; j < SIZE; ++j) {
             if (guesses[i][j].size() == 1) {
                 ++counter;
                 matrix[i][j] = *guesses[i][j].begin();
