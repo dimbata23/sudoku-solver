@@ -7,8 +7,10 @@
 const static int SIZE = 9;
 const static int SMALL_SIZE = 3;
 
-using charMatrix = std::array<std::array<char, SIZE>, SIZE>;
-using guessesMatrix = std::array<std::array<std::unordered_set<char>, SIZE>, SIZE>;
+using elem = char;
+using elemMatrix = std::array<std::array<elem, SIZE>, SIZE>;
+using guesses = std::unordered_set<elem>;
+using guessesMatrix = std::array<std::array<guesses, SIZE>, SIZE>;
 
 class Sudoku
 {
@@ -38,7 +40,7 @@ private:
     bool canBePlacedAt(char guess, int i, int j) const;
 
 private:
-    charMatrix matrix;
+    elemMatrix matrix;
     guessesMatrix guesses;
 
 };
