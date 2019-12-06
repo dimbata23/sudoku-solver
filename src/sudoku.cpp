@@ -1,5 +1,6 @@
 #include "sudoku.hpp"
 
+
 Sudoku::Sudoku() {
     for (int i = 0; i < SIZE; ++i) {
         for (int j = 0; j < SIZE; ++j) {
@@ -71,7 +72,7 @@ bool Sudoku::btSolve() {
     for (int i = 0; i < SIZE; ++i) {
         for (int j = 0; j < SIZE; ++j) {
             if (matrix[i][j] == '0') {
-                for (auto guess : old.guesses[i][j]) {
+                for (elem guess : old.guesses[i][j]) {
                     matrix[i][j] = guess;
                     if (removeGuesses() && btSolve())
                         return true;
