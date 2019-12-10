@@ -17,12 +17,12 @@ void Sudoku::print(std::ostream& out) const {
         for (int j = 0; j < SIZE; ++j) {
             out << matrix[i][j] << ' ';
             if (j % SMALL_SIZE == SMALL_SIZE - 1 && j < SIZE - 1)
-                out << "# ";
+                out << "  ";
         }
         out << std::endl;
         if (i % SMALL_SIZE == SMALL_SIZE - 1 && i < SIZE - 1) {
             for (int j = 0; j < 2*SIZE + 3; ++j)
-                out << "#";
+                out << ' ';
             out << std::endl;
         }
     }
