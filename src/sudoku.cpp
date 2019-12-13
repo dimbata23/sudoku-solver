@@ -12,15 +12,15 @@ Sudoku::Sudoku() {
 }
 
 
-void Sudoku::print(std::ostream& out) const {
+void Sudoku::print(std::ostream& out, bool formatted) const {
     for (int i = 0; i < SIZE; ++i) {
         for (int j = 0; j < SIZE; ++j) {
             out << matrix[i][j] << ' ';
-            if (j % SMALL_SIZE == SMALL_SIZE - 1 && j < SIZE - 1)
+            if (formatted && j % SMALL_SIZE == SMALL_SIZE - 1 && j < SIZE - 1)
                 out << "  ";
         }
         out << std::endl;
-        if (i % SMALL_SIZE == SMALL_SIZE - 1 && i < SIZE - 1) {
+        if (formatted && i % SMALL_SIZE == SMALL_SIZE - 1 && i < SIZE - 1) {
             for (int j = 0; j < 2*SIZE + 3; ++j)
                 out << ' ';
             out << std::endl;
@@ -36,19 +36,31 @@ void Sudoku::read(std::istream& in) {
 }
 
 
+bool Sudoku::solve() {
+    simpleSolve();
+    if (!isFilled())
+        return complexSolve();
+    return true;
+}
+
+
+std::ostream& operator<<(std::ostream& out, const Sudoku& sud) {
+    sud.print(out, false);
+    return out;
+}
+
+
+std::istream& operator>>(std::istream& in, Sudoku& sud) {
+    sud.read(in);
+    return in;
+}
+
+
 bool Sudoku::isFilled() const {
     for (int i = 0; i < SIZE; ++i)
         for (int j = 0; j < SIZE; ++j)
             if (matrix[i][j] == '0')
                 return false;
-    return true;
-}
-
-
-bool Sudoku::solve() {
-    simpleSolve();
-    if (!isFilled())
-        return complexSolve();
     return true;
 }
 

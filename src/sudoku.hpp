@@ -21,14 +21,20 @@ public:
     Sudoku& operator=(const Sudoku&) = default;
     ~Sudoku() = default;
 
-    // Prints the Sudoku in a formatted way using a stream
-    void print(std::ostream& = std::cout) const;
+    // Prints the Sudoku with or without separating the 3x3 squares using a stream
+    void print(std::ostream& = std::cout, bool formatted = true) const;
 
     // Reads the Sudoku using a stream
     void read(std::istream& = std::cin);
 
     // Solves the Sudoku, returns wheter or not if it was possible to be solved
     bool solve();
+
+    // Operator <<
+    friend std::ostream& operator<<(std::ostream&, const Sudoku&);
+
+    // Operator >>
+    friend std::istream& operator>>(std::istream&, Sudoku&);
 
 private:
     bool isFilled() const;

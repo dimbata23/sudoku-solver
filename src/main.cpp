@@ -7,7 +7,7 @@ int main()
 {
     Sudoku sud;
     std::ifstream in("sudoku_samples/s16.txt");
-    sud.read(in);
+    in >> sud;
     in.close();
 
     auto start = std::chrono::high_resolution_clock::now();
