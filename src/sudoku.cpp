@@ -30,11 +30,9 @@ void Sudoku::print(std::ostream& out) const {
 
 
 void Sudoku::read(std::istream& in) {
-    for (int i = 0; i < SIZE; ++i) {
-        for (int j = 0; j < SIZE; ++j) {
+    for (int i = 0; i < SIZE; ++i)
+        for (int j = 0; j < SIZE; ++j)
             in >> matrix[i][j];
-        }
-    }
 }
 
 
@@ -139,7 +137,6 @@ bool Sudoku::setSingleGuesses() {
 
 bool Sudoku::canBePlacedAt(char guess, int i, int j) const {
     if (matrix[i][j] == '0') {
-
         int blockI = (i / SMALL_SIZE) * SMALL_SIZE;
         int blockJ = (j / SMALL_SIZE) * SMALL_SIZE;
         for (int k = 0; k < SIZE; ++k) {
